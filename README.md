@@ -110,6 +110,11 @@ The release manifest is generated from `manifest.json` and validated before zipp
 
 Chrome Web Store submission still requires account/listing work outside this repository: store description, screenshots, category, support/contact details, privacy disclosures, and any reviewer notes about local WASM/model-data downloads.
 
+## Documentation
+
+- [User Guide](docs/USER_GUIDE.md)
+- [Store Listing Draft](docs/STORE_LISTING.md)
+
 ## If the Local Masker button does not appear
 
 Check these first:
