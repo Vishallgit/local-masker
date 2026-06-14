@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Local Masker</title>
+    <link rel="stylesheet" href="./composer.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <div>
+            <h1>Local Masker</h1>
+            <p class="subtitle">Private composer for AI prompts</p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <span class="badge"><span class="badge-dot" aria-hidden="true"></span>Local only</span>
+          <button id="closeComposerButton" class="icon-button close-composer" type="button" aria-label="Close Local Masker">
+            <span aria-hidden="true"></span>
+          </button>
+        </div>
+      </header>
+
+      <section class="composer-panel" aria-label="Prompt composer">
+        <div class="composer-head">
+          <div>
+            <h2>Compose safely</h2>
+            <p>Mask sensitive details before sending your prompt to AI.</p>
+          </div>
+        </div>
+
+        <label class="field">
+          <textarea id="rawPrompt" rows="7" spellcheck="true" autocomplete="off" placeholder="Write your prompt here..."></textarea>
+        </label>
+        <div class="meta-row">
+          <span id="promptMeta" class="field-meta">0 chars / 0 words</span>
+        </div>
+
+        <span id="smartModeStatus" hidden aria-hidden="true">Regex ready</span>
+        <select id="providerSelect" hidden aria-hidden="true">
+          <option value="regex-only" selected>Regex only</option>
+          <option value="mock">Mock provider</option>
+          <option value="privacy-filter">Privacy Filter WebGPU</option>
+        </select>
+        <button id="loadPrivacyFilterButton" class="secondary model-button" type="button" hidden>Load Privacy Filter model</button>
+
+        <div id="status" class="status neutral" aria-live="polite" hidden>Ready</div>
+
+        <div class="actions">
+          <button id="maskInsertButton" class="primary action-primary" type="button" aria-label="Mask & Insert">
+            <span id="maskInsertButtonLabel">Mask &amp; Insert</span>
+          </button>
+          <button id="clearButton" class="secondary clear-action" type="button">Clear</button>
+        </div>
+      </section>
+
+      <section id="previewPanel" class="output preview-panel" hidden>
+        <div class="section-header">
+          <h2>Masked prompt</h2>
+          <button id="copyMaskedButton" class="secondary small" type="button" disabled>Copy</button>
+        </div>
+        <pre id="maskedPreview"></pre>
+      </section>
+
+      <section class="utility-panel" aria-label="Validation tools" data-dev-only="true">
+        <div class="utility-actions">
+          <button id="inferenceStatusButton" class="secondary" type="button">Check inference status</button>
+          <button id="runtimeDiagnosticsButton" class="secondary" type="button">Runtime diagnostics</button>
+          <button id="webgpuProbeButton" class="secondary" type="button">WebGPU probe</button>
+          <button id="privacyFilterSmokeButton" class="secondary" type="button">Run Privacy Filter smoke test</button>
+          <button id="selfTestButton" class="secondary" type="button" data-dev-only="true">Run local self-test</button>
+          <button id="diagnoseButton" class="secondary" type="button">Diagnose target</button>
+        </div>
+      </section>
+
+      <div class="results-grid" data-dev-only="true">
+        <section class="output">
+          <h2>Detected Counts</h2>
+          <div id="detectedCounts" class="counts">None</div>
+        </section>
+
+        <section class="output">
+          <h2>Inference Status</h2>
+          <dl id="inferenceStatus" class="diagnostics compact">
+            <div>
+              <dt>Provider</dt>
+              <dd>Not checked</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="output">
+          <div class="section-header">
+            <h2>Runtime Diagnostics</h2>
+            <button id="copyRuntimeDiagnosticsButton" class="secondary small" type="button" disabled>Copy runtime diagnostics</button>
+          </div>
+          <dl id="runtimeDiagnostics" class="diagnostics compact">
+            <div>
+              <dt>Status</dt>
+              <dd>Not run</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="output">
+          <div class="section-header">
+            <h2>WebGPU Probe</h2>
+            <button id="copyWebgpuDiagnosticsButton" class="secondary small" type="button" disabled>Copy WebGPU diagnostics</button>
+          </div>
+          <dl id="webgpuProbeDiagnostics" class="diagnostics compact">
+            <div>
+              <dt>Status</dt>
+              <dd>Not run</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="output">
+          <h2>Privacy Filter Smoke Test</h2>
+          <dl id="privacyFilterSmokeResults" class="diagnostics compact">
+            <div>
+              <dt>Status</dt>
+              <dd>Not run</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="output" data-dev-only="true">
+          <h2>Local Self-Test</h2>
+          <dl id="selfTestResults" class="diagnostics compact">
+            <div>
+              <dt>Status</dt>
+              <dd>Not run</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="output">
+          <h2>Insertion Result</h2>
+          <dl id="insertionDiagnostics" class="diagnostics">
+            <div>
+              <dt>Status</dt>
+              <dd>Not run</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="output output-wide">
+          <div class="section-header">
+            <h2>Target Diagnostics</h2>
+            <button id="copyDiagnosticsButton" class="secondary small" type="button" disabled>Copy diagnostics</button>
+          </div>
+          <dl id="targetDiagnostics" class="diagnostics">
+            <div>
+              <dt>Status</dt>
+              <dd>Not run</dd>
+            </div>
+          </dl>
+          <div id="candidateList" class="candidate-list"></div>
+        </section>
+      </div>
+    </main>
+
+    <div id="setupDialog" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="setupDialogTitle" hidden>
+      <section class="setup-modal">
+        <div class="modal-mark" aria-hidden="true"></div>
+        <div class="modal-copy">
+          <h2 id="setupDialogTitle">Set up stronger local masking?</h2>
+          <p id="setupReason">This prompt may contain private details that need semantic detection.</p>
+          <p>Local Masker will download the Privacy Filter model files for stronger detection. The first setup can take a few minutes, sometimes up to 10 minutes, and prompts still stay inside the extension.</p>
+        </div>
+        <div class="modal-actions">
+          <button id="setupConfirmButton" class="primary" type="button">OK, set it up</button>
+          <button id="setupCancelButton" class="secondary" type="button">Use quick masking</button>
+        </div>
+      </section>
+    </div>
+
+    <script type="module" src="./composer.js"></script>
+  </body>
+</html>

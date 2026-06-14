@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "Local Masker",
+  "version": "0.1.0",
+  "description": "Local-only prompt masking scaffold for supported AI websites.",
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*",
+        "http://localhost/*",
+        "http://127.0.0.1/*"
+      ],
+      "js": ["src/contentScript.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": ["storage", "offscreen"],
+  "host_permissions": [
+    "https://huggingface.co/openai/privacy-filter/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/siteAdapters.js",
+        "src/dev/selfTestConstants.js",
+        "src/inference/webgpuDiagnostics.js",
+        "src/composer/composer.html",
+        "src/composer/composer.js",
+        "src/composer/composer.css"
+      ],
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*",
+        "http://localhost/*",
+        "http://127.0.0.1/*"
+      ]
+    }
+  ]
+}

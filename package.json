@@ -1,0 +1,27 @@
+{
+  "name": "local-masker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-offscreen.mjs",
+    "build:release": "node scripts/build-release.mjs",
+    "test": "node test/masker.test.mjs && node test/spanUtils.test.mjs && node test/inferenceEngine.test.mjs && node test/offscreen.test.mjs && node test/selfTestConstants.test.mjs && node test/privacyFilterOutput.test.mjs && node test/runtimeErrorSanitizer.test.mjs && node test/runtimeDiagnostics.test.mjs && node test/runtimeResolution.test.mjs && node test/webgpuDiagnostics.test.mjs && node test/offscreenBundleCheck.test.mjs && node test/buildManifest.test.mjs && node test/releasePackage.test.mjs && node test/e2eArtifactSanitizer.test.mjs && node test/webgpuArtifactSanitizer.test.mjs",
+    "smoke:extension": "node scripts/smoke-extension-load.mjs",
+    "diagnose:extension": "node scripts/diagnose-extension-load.mjs",
+    "e2e:fixture": "node scripts/e2e-local-fixture-extension.mjs",
+    "e2e:privacy-filter": "node scripts/e2e-privacy-filter-fixture.mjs",
+    "e2e:webgpu": "node scripts/e2e-webgpu-probe.mjs",
+    "inspect:runtime": "node scripts/inspect-transformers-runtime.mjs",
+    "check:offscreen-bundle": "node scripts/check-offscreen-bundle.mjs",
+    "audit:remote-code": "node scripts/audit-no-remote-code.mjs",
+    "verify": "npm test && npm run build && npm run audit:remote-code && npm run check:offscreen-bundle && npm run smoke:extension && npm run build:release"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^4.2.0",
+    "onnxruntime-web": "1.26.0-dev.20260416-b7804b056c"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0"
+  }
+}

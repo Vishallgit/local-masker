@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Local Masker Prompt Fixture</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f4f7f5;
+        color: #17211e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      main {
+        display: grid;
+        gap: 18px;
+        margin: 0 auto;
+        max-width: 880px;
+        padding: 28px 18px 110px;
+      }
+
+      h1 {
+        font-size: 26px;
+        margin: 0;
+      }
+
+      p {
+        color: #52645e;
+        margin: 4px 0 0;
+      }
+
+      .instructions {
+        background: #e9f2ef;
+        border: 1px solid #c6d9d3;
+        border-radius: 8px;
+        color: #263833;
+        padding: 16px;
+      }
+
+      .instructions h2 {
+        font-size: 16px;
+        margin: 0 0 8px;
+      }
+
+      .instructions ol {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .instructions li {
+        margin: 4px 0;
+      }
+
+      section {
+        background: #ffffff;
+        border: 1px solid #d6e2de;
+        border-radius: 8px;
+        display: grid;
+        gap: 10px;
+        padding: 16px;
+      }
+
+      label,
+      .label {
+        color: #263833;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      textarea,
+      input,
+      [contenteditable="true"],
+      [data-slate-editor="true"],
+      [data-lexical-editor="true"] {
+        border: 1px solid #b9cbc5;
+        border-radius: 6px;
+        color: #17211e;
+        font: 14px/1.45 Arial, Helvetica, sans-serif;
+        min-height: 46px;
+        padding: 10px;
+        width: 100%;
+      }
+
+      textarea {
+        min-height: 92px;
+        resize: vertical;
+      }
+
+      [contenteditable="true"],
+      [data-slate-editor="true"],
+      [data-lexical-editor="true"] {
+        background: #ffffff;
+        min-height: 72px;
+      }
+
+      textarea:focus,
+      input:focus,
+      [contenteditable="true"]:focus,
+      [data-slate-editor="true"]:focus,
+      [data-lexical-editor="true"]:focus {
+        border-color: #126b5c;
+        box-shadow: 0 0 0 3px rgba(18, 107, 92, 0.14);
+        outline: none;
+      }
+
+      button {
+        background: #126b5c;
+        border: 1px solid #126b5c;
+        border-radius: 6px;
+        color: #ffffff;
+        cursor: pointer;
+        font: 700 13px/1 Arial, Helvetica, sans-serif;
+        justify-self: start;
+        min-height: 34px;
+        padding: 0 12px;
+      }
+
+      .ProseMirror {
+        white-space: pre-wrap;
+      }
+
+      .fixture-hidden {
+        display: none;
+      }
+
+      .fixture-offscreen {
+        left: -10000px;
+        position: absolute;
+        top: 0;
+        width: 320px;
+      }
+
+      .spacer {
+        align-items: center;
+        background: transparent;
+        border: 1px dashed #b9cbc5;
+        color: #52645e;
+        min-height: 720px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Local Masker Prompt Fixture</h1>
+        <p>Focus any fake prompt, open Local Masker, then diagnose and insert.</p>
+      </header>
+
+      <div class="instructions">
+        <h2>Fixture instructions</h2>
+        <ol>
+          <li>Focus one fake editor.</li>
+          <li>Click Local Masker.</li>
+          <li>Click Check inference status and confirm the mock provider is loaded.</li>
+          <li>Click Diagnose target.</li>
+          <li>Confirm the selected target matches the focused editor.</li>
+          <li>Insert a masked prompt.</li>
+          <li>Confirm only masked text appears.</li>
+        </ol>
+      </div>
+
+      <div class="instructions">
+        <h2>Stage 4.5 Local Self-Test</h2>
+        <ol>
+          <li>Focus a fixture editor.</li>
+          <li>Open Local Masker.</li>
+          <li>Click Check inference status.</li>
+          <li>Click Run local self-test.</li>
+          <li>Confirm PASS.</li>
+        </ol>
+      </div>
+
+      <section>
+        <label for="fixture-textarea">Textarea prompt</label>
+        <textarea id="fixture-textarea" placeholder="Textarea prompt"></textarea>
+        <button type="button">Send</button>
+      </section>
+
+      <section>
+        <label for="fixture-input">Input type=text prompt</label>
+        <input id="fixture-input" type="text" placeholder="Input prompt">
+        <button type="button">Send</button>
+      </section>
+
+      <section>
+        <div class="label">Div contenteditable=true prompt</div>
+        <div id="fixture-contenteditable" contenteditable="true" role="textbox" aria-label="Contenteditable prompt"></div>
+        <button type="button">Send</button>
+      </section>
+
+      <section>
+        <div class="label">Div role=textbox contenteditable=true prompt</div>
+        <div id="fixture-role-textbox" role="textbox" contenteditable="true" aria-label="Role textbox prompt"></div>
+        <button type="button">Send</button>
+      </section>
+
+      <section>
+        <div class="label">ProseMirror-like prompt</div>
+        <div id="fixture-prosemirror" class="ProseMirror" contenteditable="true" aria-label="ProseMirror prompt"></div>
+        <button type="button">Send</button>
+      </section>
+
+      <section>
+        <div class="label">Slate-like prompt</div>
+        <div id="fixture-slate" data-slate-editor="true" contenteditable="true" aria-label="Slate prompt"></div>
+        <button type="button">Send</button>
+      </section>
+
+      <section>
+        <div class="label">Lexical-like prompt</div>
+        <div id="fixture-lexical" data-lexical-editor="true" contenteditable="true" aria-label="Lexical prompt"></div>
+        <button type="button">Send</button>
+      </section>
+
+      <section class="fixture-hidden" aria-hidden="true">
+        <label for="fixture-hidden-textarea">Hidden textarea that must be ignored</label>
+        <textarea id="fixture-hidden-textarea"></textarea>
+        <button type="button">Send</button>
+      </section>
+
+      <section>
+        <label for="fixture-disabled-textarea">Disabled textarea that must be ignored</label>
+        <textarea id="fixture-disabled-textarea" disabled></textarea>
+        <button type="button">Send</button>
+      </section>
+
+      <section>
+        <label for="fixture-readonly-input">Readonly input that must be ignored</label>
+        <input id="fixture-readonly-input" type="text" readonly value="">
+        <button type="button">Send</button>
+      </section>
+
+      <section class="fixture-offscreen">
+        <div class="label">Offscreen contenteditable that must be ignored or scored low</div>
+        <div id="fixture-offscreen-editor" contenteditable="true" role="textbox"></div>
+        <button type="button">Send</button>
+      </section>
+
+      <section class="spacer">
+        Scroll room: when no editor is focused, the bottom editor below should be preferred.
+      </section>
+
+      <section>
+        <div class="label">Bottom-of-page editor fallback</div>
+        <div id="fixture-bottom-editor" contenteditable="true" role="textbox" aria-label="Bottom fallback prompt"></div>
+        <button type="button">Send</button>
+      </section>
+    </main>
+  </body>
+</html>
