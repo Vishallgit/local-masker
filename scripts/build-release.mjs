@@ -32,6 +32,10 @@ export const PRODUCTION_MATCHES = [
 
 const REQUIRED_RELEASE_FILES = [
   "manifest.json",
+  "assets/icons/icon-16.png",
+  "assets/icons/icon-32.png",
+  "assets/icons/icon-48.png",
+  "assets/icons/icon-128.png",
   "src/background.js",
   "src/contentScript.js",
   "src/siteAdapters.js",
@@ -77,6 +81,14 @@ export function validateProductionManifest(manifest) {
 
   if (manifest.manifest_version !== 3) {
     errors.push("Manifest must use Manifest V3.");
+  }
+
+  if (!manifest.icons || manifest.icons["128"] !== "assets/icons/icon-128.png") {
+    errors.push("Production manifest must include a 128x128 extension icon.");
+  }
+
+  if (/\bscaffold\b/i.test(manifest.description || "")) {
+    errors.push("Production manifest description must not describe the extension as a scaffold.");
   }
 
   if (/(?:localhost|127\.0\.0\.1)/i.test(serialized)) {
@@ -139,6 +151,7 @@ function buildRelease() {
 }
 
 function copyReleaseInputs() {
+  copyDirectory("assets");
   copyFile("src/background.js");
   copyFile("src/contentScript.js");
   copyFile("src/siteAdapters.js");

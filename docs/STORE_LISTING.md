@@ -31,16 +31,23 @@ Local Masker does not include a backend, telemetry, analytics, or automatic prom
 
 ## Screenshot Candidates
 
-Use these repository screenshots as starting points for store media:
+Use these prepared store media files:
 
-- `docs/assets/local-masker-launcher.png`
-- `docs/assets/local-masker-composer-fixture.png`
+- `docs/store-assets/store-icon-128.png`
+- `docs/store-assets/small-promo-440x280.png`
+- `docs/store-assets/screenshot-main-1280x800.png`
 
-Before final store submission, capture polished screenshots directly on ChatGPT, Claude, and Gemini with development diagnostics hidden.
+Additional production screenshots on ChatGPT, Claude, and Gemini can be added later, but the prepared 1280x800 screenshot is suitable for the first draft submission.
 
 ## Privacy Disclosure Draft
 
 Local Masker processes prompt text locally in the browser extension to detect and replace sensitive details before insertion into supported AI websites. The extension does not send prompt text to a backend controlled by the developer and does not include analytics or telemetry. If the optional Privacy Filter model is set up, model files may be downloaded from Hugging Face as model data for local inference.
+
+Privacy policy URL:
+
+```text
+https://github.com/Vishallgit/local-masker/blob/main/PRIVACY.md
+```
 
 ## Reviewer Notes
 
@@ -58,6 +65,7 @@ Local Masker processes prompt text locally in the browser extension to detect an
 - Run `npm run build:release`.
 - Confirm `release/local-masker.zip` is generated.
 - Confirm release manifest excludes localhost and development fixtures.
-- Capture final production screenshots.
-- Prepare store privacy disclosures.
+- Confirm extension icons are present in the release package.
+- Upload prepared store assets from `docs/store-assets`.
+- Add the privacy policy URL.
 - Upload `release/local-masker.zip`.

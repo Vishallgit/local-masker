@@ -1,10 +1,10 @@
 # Local Masker
 
-Local Masker is a Chrome Manifest V3 extension for proving a local-first prompt masking flow on supported AI websites.
+Local Masker is a Chrome Manifest V3 extension for local-first prompt masking on supported AI websites.
 
 ## Current Status
 
-Stage 5.10 is implemented. The extension has a production release package path, smart automatic masking, a real OpenAI Privacy Filter provider scaffold using `@huggingface/transformers`, first-time model setup consent, safe runtime diagnostics, WebGPU adapter probes, a Privacy Filter smoke test, and local-fixture E2E diagnostics. The Transformers.js runtime is bundled locally with the ONNX Runtime WebGPU browser entry resolved at build time. Quick regex masking is instant, Privacy Filter setup is opt-in on first real-site use, and regex masking remains the safe fallback.
+The extension has a production release package path, smart automatic masking, a Privacy Filter provider using `@huggingface/transformers`, first-time model setup consent, safe runtime diagnostics, WebGPU adapter probes, a Privacy Filter smoke test, and local-fixture E2E diagnostics. The Transformers.js runtime is bundled locally with the ONNX Runtime WebGPU browser entry resolved at build time. Quick regex masking is instant, Privacy Filter setup is opt-in on first real-site use, and regex masking remains the safe fallback.
 
 ## What Works
 
@@ -108,12 +108,15 @@ The command writes:
 
 The release manifest is generated from `manifest.json` and validated before zipping. It removes localhost and 127.0.0.1 content-script matches, removes dev self-test web-accessible resources, keeps only the supported real AI-site matches, keeps `unsafe-eval` disabled, keeps `wasm-unsafe-eval` for local WASM execution, and omits `src/dev` from the release folder.
 
-Chrome Web Store submission still requires account/listing work outside this repository: store description, screenshots, category, support/contact details, privacy disclosures, and any reviewer notes about local WASM/model-data downloads.
+Chrome Web Store submission still requires manual Developer Dashboard entry for category, support/contact details, privacy fields, and reviewer notes.
+The repo includes the supporting material in `docs/`, including listing copy, privacy disclosures, reviewer notes, and prepared store media assets.
 
 ## Documentation
 
 - [User Guide](docs/USER_GUIDE.md)
 - [Store Listing Draft](docs/STORE_LISTING.md)
+- [Chrome Web Store Submission Notes](docs/STORE_SUBMISSION.md)
+- [Privacy Policy](PRIVACY.md)
 
 ## If the Local Masker button does not appear
 

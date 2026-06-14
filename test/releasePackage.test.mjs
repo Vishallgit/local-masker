@@ -11,6 +11,8 @@ const webAccessibleResources = productionManifest.web_accessible_resources.flatM
 
 assert.deepEqual(contentMatches, PRODUCTION_MATCHES);
 assert.deepEqual(webAccessibleMatches, PRODUCTION_MATCHES);
+assert.equal(productionManifest.icons["128"], "assets/icons/icon-128.png");
+assert.equal(/\bscaffold\b/i.test(productionManifest.description), false);
 assert.equal(/localhost|127\.0\.0\.1/.test(serialized), false);
 assert.equal(webAccessibleResources.includes("src/dev/selfTestConstants.js"), false);
 assert.equal(/(^|[^-])unsafe-eval/i.test(productionManifest.content_security_policy.extension_pages), false);
@@ -27,6 +29,12 @@ assert.deepEqual(validateProductionManifest(productionManifest), []);
   const invalidManifest = structuredClone(productionManifest);
   invalidManifest.web_accessible_resources[0].resources.push("src/dev/selfTestConstants.js");
   assert.ok(validateProductionManifest(invalidManifest).some((error) => error.includes("Dev-only")));
+}
+
+{
+  const invalidManifest = structuredClone(productionManifest);
+  delete invalidManifest.icons;
+  assert.ok(validateProductionManifest(invalidManifest).some((error) => error.includes("128x128")));
 }
 
 console.log("releasePackage tests passed");

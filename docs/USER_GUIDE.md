@@ -61,6 +61,8 @@ The screenshot below shows the development fixture used for extension QA. The pr
 - Placeholder vault data stays in content-script memory for the active page session.
 - The extension stores only non-sensitive setup/status metadata.
 
+See the full [Privacy Policy](../PRIVACY.md).
+
 ## Troubleshooting
 
 If the Local Masker button does not appear:

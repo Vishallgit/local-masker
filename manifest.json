@@ -1,8 +1,16 @@
 {
   "manifest_version": 3,
   "name": "Local Masker",
+  "short_name": "Local Masker",
   "version": "0.1.0",
-  "description": "Local-only prompt masking scaffold for supported AI websites.",
+  "description": "Mask sensitive prompt details locally before using supported AI websites.",
+  "homepage_url": "https://github.com/Vishallgit/local-masker",
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "32": "assets/icons/icon-32.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  },
   "background": {
     "service_worker": "src/background.js",
     "type": "module"
