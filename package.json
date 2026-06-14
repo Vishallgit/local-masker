@@ -12,6 +12,7 @@
     "e2e:fixture": "node scripts/e2e-local-fixture-extension.mjs",
     "e2e:privacy-filter": "node scripts/e2e-privacy-filter-fixture.mjs",
     "e2e:webgpu": "node scripts/e2e-webgpu-probe.mjs",
+    "assets:store": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/generate-store-assets.ps1",
     "inspect:runtime": "node scripts/inspect-transformers-runtime.mjs",
     "check:offscreen-bundle": "node scripts/check-offscreen-bundle.mjs",
     "audit:remote-code": "node scripts/audit-no-remote-code.mjs",
